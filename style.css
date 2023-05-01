@@ -1,0 +1,9 @@
+#board {
+    display: grid;
+    grid-template-columns: repeat(3, 150px);
+    grid-auto-rows: 1fr;
+}
+
+.square {
+    height: 150px;
+}
