@@ -1,6 +1,6 @@
 
 const gameBoard = (function(){
-    let board = ['x','o','x','x','o','x','x','o','x'];
+    let board = ['','','','','','','','',''];
     const getBoard = () => {
         return board;
     }
@@ -15,14 +15,29 @@ const gameBoard = (function(){
 const displayBoard = function(){
     const board = gameBoard.getBoard();
     const square = document.querySelectorAll('.square');
-    console.log(board);
     square.forEach((square, index) => {
-        console.log(`Updating square ${index} with value ${board[index]}`);
-
+        console.log(`Updating square ${index} with value ${board[index]}`); 
         square.textContent = board[index];
     });
-}
+};
+displayBoard();
 
-document.addEventListener("DOMContentLoaded", function() {
-    displayBoard();
-});
+
+const displayController = (function(){
+    let currentValue = 'X';
+    const square = document.querySelectorAll('.square');
+    const board = gameBoard.getBoard();
+    for(let i = 0; i<square.length; i++){
+        square[i].addEventListener('click', (e) => {
+            console.log(e.target.dataset.square)
+            board.splice((e.target.dataset.square)-1, 1, currentValue)
+            currentValue = currentValue === 'X' ? 'O' : 'X';
+            displayBoard();
+        }, { once: true });
+    }
+})();
+
+
+
+    
+

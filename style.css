@@ -2,8 +2,12 @@
     display: grid;
     grid-template-columns: repeat(3, 150px);
     grid-auto-rows: 1fr;
+    gap: 11px;
 }
 
 .square {
     height: 150px;
+    background-color: grey;
+    gap: 11px;
+    font-size: 44px;
 }
