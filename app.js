@@ -14,7 +14,6 @@ const winConditions = [
     return winConditions.some(combination => combination.every(index =>board[index] !== '' && board[index] === board[combination[0]]));
   }
 
-    
 
 const gameBoard = (function(){
     let board = ['','','','','','','','',''];
@@ -22,8 +21,13 @@ const gameBoard = (function(){
         return board;
     }
 
+    const resetBoard = ()=>{
+        board = ['','','','','','','','','']
+    }
+
     return{
         getBoard,
+        resetBoard,
     }
 
 })();
@@ -32,30 +36,68 @@ const gameBoard = (function(){
 const displayBoard = function(){
     const board = gameBoard.getBoard();
     const square = document.querySelectorAll('.square');
-    square.forEach((square, index) => {
+    return square.forEach((square, index) => {
         // console.log(`Updating square ${index} with value ${board[index]}`); 
         square.textContent = board[index];
     });
 };
-displayBoard();
 
 
-const displayController = (function(){
+
+
+const displayController = function(){
     let currentValue = 'X';
     const square = document.querySelectorAll('.square');
     const board = gameBoard.getBoard();
-    for(let i = 0; i<square.length; i++){
-        square[i].addEventListener('click', (e) => {
-            board.splice((e.target.dataset.square)-1, 1, currentValue);
-            displayBoard(board);
-            if (checkWinner(board)){
-                console.log(`${currentValue} wins!`);
-            }
-            currentValue = currentValue === 'X' ? 'O' : 'X';
-        }, { once: true });
-    }
- 
-})();
+    const wins = document.getElementById('winner');
+    let count = 0;
 
+    // Define the clickHandler function
+    const clickHandler = (e) => {
+        count ++;
+        console.log(count);
+        board.splice((e.target.dataset.square)-1, 1, currentValue);
+        displayBoard(board);
+
+
+        if (checkWinner(board)){
+            console.log(`${currentValue} wins!`);
+            
+            wins.innerHTML = `${currentValue} wins!`;
+            //remove event listener
+            for(let i = 0; i<square.length; i++){
+                square[i].removeEventListener('click', clickHandler);
+            }
+        }
+
+        if (count === 9 && !checkWinner(board)){
+            console.log('draw');
+            wins.innerHTML = ('draw')
+
+        }
+        currentValue = currentValue === 'X' ? 'O' : 'X';
+    }
+
+    // Add the event listeners using the clickHandler function
+    for(let i = 0; i<square.length; i++){
+        square[i].addEventListener('click', clickHandler, { once: true });
+    }
+    return {
+        clickHandler,
+    }
+};
+
+const resetButton = document.getElementById('reset');
+resetButton.addEventListener('click', ()=> {
+     gameBoard.resetBoard();
+     displayBoard();
+     document.getElementById('winner').innerHTML = '';
+     displayController();
+    console.log('reset');
+});
+
+
+displayBoard();
+displayController();
 
 

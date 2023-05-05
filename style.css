@@ -1,13 +1,58 @@
+body{
+    background-color: #eef2ff;
+    margin:0;
+    padding: 0;
+}
+
+#main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 44px; 
+   
+}
+
+
 #board {
     display: grid;
     grid-template-columns: repeat(3, 150px);
     grid-auto-rows: 1fr;
     gap: 11px;
+    margin-top: 44px;
+    background-color: #1e1b4b;
+  
 }
 
 .square {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 150px;
     background-color: grey;
     gap: 11px;
-    font-size: 44px;
+    font-size: 100px;
+    
+    background-color: #c7d2fe; 
 }
+
+.square:hover{
+    background-color: #93c5fd;
+}
+
+#winner {
+    font-size: 33px;
+}
+
+#reset {
+    margin-top: 11px;
+    background-color: #c7d2fe; 
+    font-size: 22px;
+    border-radius: 12px;
+    border: 0px;
+    padding: 11px;
+}
+
+#reset:hover {
+    background-color: #93c5fd;
+}
+
